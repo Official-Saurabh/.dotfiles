@@ -1,0 +1,48 @@
+# -----------------------------------------------------------------------------
+# Matugen Dynamic Starship Preset
+# -----------------------------------------------------------------------------
+
+# Use the palette defined at the bottom
+palette = "dynamic"
+
+# Layout: A pill for the directory, followed by git info
+format = """
+[](primary)\
+$directory\
+[](primary) \
+$git_branch\
+$git_status\
+$character"""
+
+# 1. The Directory Pill
+[directory]
+format = "[ $path ]($style)"
+style = "bg:primary fg:on_primary"
+truncation_length = 3
+truncation_symbol = "…/"
+
+# 2. Git Information
+[git_branch]
+format = "[ $symbol$branch ]($style)"
+style = "fg:secondary"
+symbol = " "
+
+[git_status]
+format = "[$all_status$ahead_behind]($style) "
+style = "fg:secondary"
+
+# 3. The Prompt Character (Arrow)
+[character]
+success_symbol = "[❯](bold primary)"
+error_symbol = "[❯](bold urgent)"
+vimcmd_symbol = "[❮](bold secondary)"
+
+# -----------------------------------------------------------------------------
+# Dynamic Colors (Injected by Matugen)
+# -----------------------------------------------------------------------------
+[palettes.dynamic]
+primary = "{{colors.primary.default.hex}}"
+on_primary = "{{colors.on_primary.default.hex}}"
+secondary = "{{colors.secondary.default.hex}}"
+urgent = "{{colors.error.default.hex}}"
+text = "{{colors.on_surface.default.hex}}"
