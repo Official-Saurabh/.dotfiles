@@ -1,0 +1,171 @@
+@import "colors.css";
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font";
+    font-weight: bold;
+    font-size: 14px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: @text;
+}
+
+tooltip {
+    background: @surface_1;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: @surface_2;
+}
+
+#workspaces button {
+    padding: 5px;
+    color: @surface_3; /* Muted text for inactive workspaces */
+    margin-right: 5px;
+}
+
+#workspaces button.active {
+    color: @primary;
+    border-radius: 10px;
+}
+
+#workspaces button:hover {
+    background: @surface_2;
+    color: @text;
+    border-radius: 10px;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#mpd {
+    padding: 0 10px;
+    color: @text;
+    border-radius: 15px;
+    background: @surface_1;
+    opacity: 0.8;
+    margin: 6px 3px 6px 3px;
+}
+
+#workspaces {
+    background: @surface_1;
+    border-radius: 15px;
+    margin-left: 10px;
+    padding-right: 0px;
+    padding-left: 5px;
+}
+
+#custom-power {
+    background-color: @urgent;
+    color: @surface_1;
+    border-radius: 15px;
+    padding: 0 10px;
+    margin: 6px 10px 6px 3px;
+}
+
+#clock {
+    background-color: @primary;
+    color: @surface_1;
+    margin-left: 10px;
+}
+
+#tray {
+    background-color: @secondary;
+    color: @surface_1;
+}
+
+#battery {
+    background-color: @primary;
+    color: @surface_1;
+    margin-right: 10px;
+}
+
+#battery.charging, #battery.plugged {
+    color: @surface_1;
+    background-color: @secondary;
+}
+
+@keyframes blink {
+    to {
+        background-color: @text;
+        color: @surface_1;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background-color: @urgent;
+    color: @text;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* 1. Style the Group Container (The "Island") */
+#group-audio {
+    background-color: @surface_1; /* Dark background */
+    border-radius: 15px;
+    margin: 6px 3px 6px 3px;
+    padding: 0px;
+    opacity: 0.8;
+}
+
+/* 2. Style the Icon (The handle) */
+#pulseaudio {
+    background-color: transparent; 
+    color: @primary;
+    margin: 0;
+    padding: 0 10px 0 15px;
+}
+
+/* 3. Style the Slider */
+#pulseaudio-slider {
+    background-color: transparent; 
+    margin: 0;
+    padding: 0 10px; 
+}
+
+/* 4. Ensure the slider bar looks correct on the dark background */
+#pulseaudio-slider trough {
+    min-height: 5px;
+    min-width: 80px;
+    border-radius: 5px;
+    background-color: @surface_2;
+}
+
+#pulseaudio-slider highlight {
+    min-width: 10px;
+    border-radius: 5px;
+    background-color: @primary;
+}
+
+#memory {
+    background-color: @primary;
+    color: @surface_1;
+}
+
+#temperature {
+    background-color: @primary;
+    color: @surface_1;
+}
+
+#temperature.critical {
+    background-color: @urgent;
+    color: @surface_1;
+}

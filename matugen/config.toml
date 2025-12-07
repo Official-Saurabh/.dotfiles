@@ -17,3 +17,8 @@ output_path = "~/.config/hypr/colors.conf"
 input_path = "~/.config/matugen/templates/starship.toml"
 output_path = "~/.config/starship.toml"
 
+[templates.powermenu]
+input_path = "~/.config/matugen/templates/powermenu.rasi"
+output_path = "~/.config/rofi/powermenu/powermenu.rasi"
+
+
