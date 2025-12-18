@@ -12,21 +12,27 @@
     ],
     "modules-center": ["hyprland/window"],
     "modules-right": [
-        "tray",
-        "group/audio",
+        "network",
+        "pulseaudio",
+        "backlight",
         "battery",
         "memory",
+        "custom/fan",
         "temperature",
+        "custom/notification",
+        "tray"
     ],
 
     "hyprland/window": {
-        "format": "{}"
+        "format": "{}",
+        "max-length": 50,
+        "separate-outputs": true
     },
+
     "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
         "on-click": "activate",
-        //"format": "{icon}",
         "persistent_workspaces": {
             "1": [],
             "2": [],
@@ -34,21 +40,41 @@
             "4": []
         }
     },
+
     "tray": {
         "icon-size": 13,
         "spacing": 10
     },
+
     "clock": {
-        "format": " {:%H:%M   %e %b}",
+        "format": "{:%I:%M %p}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
+
+    "network": {
+        "format-wifi": "󰇚 {bandwidthDownBits} 󰕒 {bandwidthUpBits}",
+        "format-ethernet": "󰈀 {bandwidthDownBits} 󰈀 {bandwidthUpBits}",
+        "format-disconnected": "󰖪 Disconnected",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+        "tooltip-format-ethernet": "{ifname}\n󰇚 {bandwidthDownBits} 󰕒 {bandwidthUpBits}",
+        "interval": 2,
+    },
+
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon} {percent}%",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "on-scroll-up": "brightnessctl set 5%+",
+        "on-scroll-down": "brightnessctl set 5%-",
+        "tooltip": false
+    },
+
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "tooltip": false,
         "format-muted": " Muted",
         "on-click": "pamixer -t",
-        "on-scroll-up": "pamixer -i 5",
-        "on-scroll-down": "pamixer -d 5",
         "scroll-step": 5,
         "on-click-right": "pavucontrol",
         "format-icons": {
@@ -61,19 +87,7 @@
             "default": ["", "", ""]
         }
     },
-    
-    "group/tray-expander": {
-    	"orientation": "inherit",
-    	"drawer": {
-      		"transition-duration": 600,
-      		"children-class": "tray-group-item"
-    },
-    "modules": ["custom/expand-icon", "tray"]
-    },
-    "custom/expand-icon": {
-    	"format": "",
-    	"tooltip": false
-    },
+
     "battery": {
         "states": {
             "good": 95,
@@ -86,29 +100,25 @@
         "format-alt": "{time} {icon}",
         "format-icons": ["", "", "", "", ""]
     },
-    "pulseaudio/slider": {
-        "min": 0,
-        "max": 100,
-        "orientation": "horizontal"
-    },
-    "group/audio": {
-        "orientation": "horizontal",
-        "drawer": {
-            "transition-duration": 500,
-            "children-class": "not-power",
-            "transition-left-to-right": false
-        },
-        "modules": [
-            "pulseaudio",
-            "pulseaudio/slider"
-        ]
-    },
+
     "memory": {
         "interval": 30,
         "format": "{used:0.1f}G/{total:0.1f}G",
         "max-length": 10,
         "tooltip": true,
         "tooltip-format": "{used:0.1f}GB used out of {total:0.1f}GB",
+    },
+
+    "custom/fan": {
+        "format": "󰈐 {percentage}%",
+        "format-icons": ["", "", "", "󰈐", ""], /* Icons: Low -> High -> Critical */
+        "interval": 3,
+        "exec": "$HOME/.config/waybar/scripts/fan_speed.sh",
+        "return-type": "json",
+        "tooltip": true,
+        /* Added icons to notifications for better consistency */
+        "on-click": "nbfc set -s 100 && notify-send 'NBFC' 'Fan speed set to 100%' -i weather-storm",
+        "on-click-right": "nbfc set -a && notify-send 'NBFC' 'Fan speed set to auto' -i preferences-desktop-fan",
     },
 
     "temperature": {
@@ -118,4 +128,26 @@
         "format-critical": "({temperatureC}°C) ",
         "format": "{temperatureC}°C "
     },
+
+    "custom/notification": {
+        "tooltip": true,
+        "tooltip-format": "{} notification(s)",
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "󰂚",
+            "none": "󰂚",
+            "dnd-notification": "󰂛",
+            "dnd-none": "󰂛",
+            "inhibited-notification": "󰂚",
+            "inhibited-none": "󰂚",
+            "dnd-inhibited-notification": "󰂛",
+            "dnd-inhibited-none": "󰂛"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "sleep 0.1 && swaync-client -t -sw",
+        "on-click-right": "sleep 0.1 && swaync-client -d -sw",
+        "escape": true
+    }
 }

@@ -8,11 +8,11 @@ configuration {
     font:                        "JetBrains Mono Nerd Font 12";
     
     /* Dynamic Colors from Matugen */
-    background:                  #18120b;
-    background-alt:              #251f17;
-    foreground:                  #ede0d4;
-    selected:                    #f3bd6e;
-    active:                      #ddc2a1;
+    background:                  #0f1417;
+    background-alt:              #1b2023;
+    foreground:                  #dfe3e6;
+    selected:                    #8ad0ef;
+    active:                      #b4cad5;
     urgent:                      #ffb4ab;
 }
 
